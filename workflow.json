@@ -1,0 +1,611 @@
+{
+  "name": "Ecosistema IA - Automatización Leads",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {
+          "readStatus": "unread"
+        }
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "232334df-2665-4086-add0-95901715272c",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Psolr9mr7wj9SW37",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "85a31ae5-b570-41c5-b396-26e819058663",
+              "leftValue": "={{ $json.from }}",
+              "rightValue": "nicolas.andrili@gmail.com",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        224,
+        0
+      ],
+      "id": "6a723e46-3773-4a71-b310-64bada12ef2b",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appMsYM93OLYPxvZe",
+          "mode": "list",
+          "cachedResultName": "Ecosistema IA - Leads",
+          "cachedResultUrl": "https://airtable.com/appMsYM93OLYPxvZe"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl5LGNl1nmrI7CfG",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://airtable.com/appMsYM93OLYPxvZe/tbl5LGNl1nmrI7CfG"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Estado": "Pendiente"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID_Lead",
+              "displayName": "ID_Lead",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Mensaje_Original",
+              "displayName": "Mensaje_Original",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Score_IA",
+              "displayName": "Score_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Resumen_IA",
+              "displayName": "Resumen_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Propuesta_borrador",
+              "displayName": "Propuesta_borrador",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Log_Errores",
+              "displayName": "Log_Errores",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        -32
+      ],
+      "id": "16b10af4-d697-4c56-876a-39a80edb52b0",
+      "name": "Create a record",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "1zRH5HGf6Pyui29d",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Analizá este correo y respondé ÚNICAMENTE en formato JSON:\n\nRemitente: {{ $('Gmail Trigger').json.from }}\nAsunto: {{ $('Gmail Trigger').json.subject }}\nMensaje: {{ $('Gmail Trigger').json.snippet }}\n\nDevolvé estrictamente este formato JSON:\n{\n  \"puntuacion\": 8,\n  \"resumen\": \"Resumen del correo aquí\",\n  \"respuesta_sugerida\": \"Texto de respuesta sugerida aquí\"\n}"
+            }
+          ]
+        },
+        "simplify": false,
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        640,
+        -32
+      ],
+      "id": "580c244c-58b3-4888-a9e4-f81a2f07af83",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appMsYM93OLYPxvZe",
+          "mode": "list",
+          "cachedResultName": "Ecosistema IA - Leads",
+          "cachedResultUrl": "https://airtable.com/appMsYM93OLYPxvZe"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblS1KNjlHz7W5fct",
+          "mode": "list",
+          "cachedResultName": "Log_Errores",
+          "cachedResultUrl": "https://airtable.com/appMsYM93OLYPxvZe/tblS1KNjlHz7W5fct"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nodo_Fallo": "OpenAI - GPT-4o-mini",
+            "Detalle_Payload": "={{ $json.error.message }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID_Error",
+              "displayName": "ID_Error",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha_Hora",
+              "displayName": "Fecha_Hora",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Nodo_Fallo",
+              "displayName": "Nodo_Fallo",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Detalle_Payload",
+              "displayName": "Detalle_Payload",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Lead_Relacionado",
+              "displayName": "Lead_Relacionado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        960,
+        128
+      ],
+      "id": "67493e9b-96c1-436c-b73b-c599ecce9b70",
+      "name": "Guardar Error",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "1zRH5HGf6Pyui29d",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "nicolas.andrili@gmail.com",
+        "subject": "=[NUEVO LEAD] Score: {{ JSON.parse($('Message a model').item.json.output[0].content[0].text.replace(/```json|```/g, '')).puntuacion }}/10 - Requiere revisión",
+        "message": "=Hola equipo,\n\nSe ha recibido y analizado un nuevo lead:\n\n- Resumen del pedido:\n{{ JSON.parse($('Message a model').item.json.output[0].content[0].text.replace(/```json|```/g, '')).resumen }}\n\n- Propuesta / Respuesta sugerida redactada por IA:\n{{ JSON.parse($('Message a model').item.json.output[0].content[0].text.replace(/```json|```/g, '')).respuesta_sugerida }}\n\nPor favor, ingresen a Airtable para revisar la propuesta, cambiar el estado a \"Aprobado\" y proceder con el envío al cliente.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        960,
+        -64
+      ],
+      "id": "a688f144-4fb5-4f97-a652-3e5c6e77efe8",
+      "name": "Send a message",
+      "webhookId": "115ff7f5-ee02-4632-990d-119561339682",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Psolr9mr7wj9SW37",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appMsYM93OLYPxvZe",
+          "mode": "list",
+          "cachedResultName": "Ecosistema IA - Leads",
+          "cachedResultUrl": "https://airtable.com/appMsYM93OLYPxvZe"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl5LGNl1nmrI7CfG",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://airtable.com/appMsYM93OLYPxvZe/tbl5LGNl1nmrI7CfG"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Resumen_IA": "={{ JSON.parse($('Message a model').item.json.output[0].content[0].text.replace(/```json|```/g, '')).resumen }}",
+            "Propuesta_borrador": "={{ JSON.parse($('Message a model').item.json.output[0].content[0].text.replace(/```json|```/g, '')).respuesta_sugerida }}",
+            "Score_IA": "={{ JSON.parse($('Message a model').item.json.output[0].content[0].text.replace(/```json|```/g, '')).puntuacion }}",
+            "id": "={{ $('Create a record').item.json.id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "ID_Lead",
+              "displayName": "ID_Lead",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Mensaje_Original",
+              "displayName": "Mensaje_Original",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Score_IA",
+              "displayName": "Score_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Resumen_IA",
+              "displayName": "Resumen_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Propuesta_borrador",
+              "displayName": "Propuesta_borrador",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Log_Errores",
+              "displayName": "Log_Errores",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1184,
+        -64
+      ],
+      "id": "41de1ad4-acf1-4057-bd59-e25d67cc68bf",
+      "name": "Update record",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "1zRH5HGf6Pyui29d",
+          "name": "Airtable account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a record": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Guardar Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Update record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "e464c390-01f8-4b19-8f42-d67f6fb9a6c5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2b269be80a1e275bb9fe68c0963a21c6afe4ec2c4f0620f9816cb93ba3489238"
+  },
+  "nodeGroups": [],
+  "id": "ajk90olCnxe8Xiy9",
+  "tags": []
+}
