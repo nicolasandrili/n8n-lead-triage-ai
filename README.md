@@ -3,8 +3,8 @@
 Este proyecto implementa un flujo de trabajo automatizado en n8n para la recepción, calificación, almacenamiento y notificación interna de clientes potenciales (leads) recibidos por correo electrónico.
 
 ## 🔗 Links del Proyecto
-* **Airtable Shared View (Modo Lectura):** (https://airtable.com/appMsYM93OLYPxvZe/shrNYHE1bObBcM8OK)
-* **Repositorio GitHub:** PEGAR_AQUI_EL_LINK_DE_ESTE_REPOSITO
+* **Airtable Shared View (Modo Lectura):** https://airtable.com/appMsYM93OLYPxvZe/shrNYHE1bObBcM8OK
+* **Repositorio GitHub:** https://github.com/nicolasandrili/n8n-lead-triage-ai
 
 ## 🛠️ Arquitectura de la Solución
 El flujo se compone de los siguientes nodos en n8n:
